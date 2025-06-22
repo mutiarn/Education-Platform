@@ -4,7 +4,6 @@
 @section('header', 'Quiz')
 
 @section('content')
-    <div class="p-6">
         <div class="mb-6">
             <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-1">
                 Siap Menguji Pengetahuan? 🎯
@@ -50,5 +49,4 @@
                 </div>
             </div>
         </div>
-    </div>
 @endsection

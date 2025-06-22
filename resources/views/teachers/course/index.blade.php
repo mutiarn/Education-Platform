@@ -4,8 +4,7 @@
 @section('header', 'My Courses')
 
 @section('content')
-    <div class="p-6">
-        <div class="mb-6">
+<div class="mb-8">
             <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-1">
                 Welcome Back! 👋
             </h1>
@@ -45,5 +44,4 @@
 
             {{-- Tambahkan kartu lainnya di sini --}}
         </div>
-    </div>
 @endsection
