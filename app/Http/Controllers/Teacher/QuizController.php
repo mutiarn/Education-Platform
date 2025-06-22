@@ -9,6 +9,6 @@ class QuizController extends Controller
 {
     public function index()
     {
-        return view('quiz.index');
+        return view('teachers.quiz.index');
     }
 }
