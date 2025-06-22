@@ -21,4 +21,9 @@ class CoursesController extends Controller
             'course' => $course
         ]);
     }
+
+    public function create()
+    {
+        return view('teachers.course.create');
+    }
 }

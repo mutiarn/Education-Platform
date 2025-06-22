@@ -22,7 +22,7 @@
              x-transition:leave="ease-in duration-200"
              x-transition:leave-start="opacity-100 scale-100"
              x-transition:leave-end="opacity-0 scale-95"
-             class="relative bg-white rounded-lg shadow-xl max-w-7xl w-full max-h-[90vh] overflow-hidden"
+             class="relative bg-white dark:bg-gray-900 rounded-lg shadow-xl max-w-7xl w-full max-h-[90vh] overflow-hidden"
              @click.stop>
 
             <!-- Close Button -->
@@ -41,48 +41,48 @@
                                 <div class="flex items-center gap-3 mb-3">
                                     <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
                                           :class="{
-                                              'bg-red-100 text-red-800': selectedCourse.level === 'Advanced',
-                                              'bg-orange-100 text-orange-800': selectedCourse.level === 'Intermediate',
-                                              'bg-green-100 text-green-800': selectedCourse.level === 'Beginner'
+                                              'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200': selectedCourse.level === 'Advanced',
+                                              'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200': selectedCourse.level === 'Intermediate',
+                                              'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200': selectedCourse.level === 'Beginner'
                                           }"
                                           x-text="selectedCourse.level"></span>
 
                                     <div class="flex items-center">
                                         <x-heroicon-s-star class="h-5 w-5 text-yellow-400" />
-                                        <span class="text-sm text-gray-600 ml-1" x-text="selectedCourse.rating"></span>
-                                        <span class="text-sm text-gray-400 ml-2">
+                                        <span class="text-sm text-gray-600 dark:text-gray-300 ml-1" x-text="selectedCourse.rating"></span>
+                                        <span class="text-sm text-gray-400 dark:text-gray-400 ml-2">
                                             (<span x-text="selectedCourse.students.toLocaleString()"></span> students)
                                         </span>
                                     </div>
                                 </div>
 
-                                <h2 class="text-2xl font-bold text-gray-900 mb-2" x-text="selectedCourse.title"></h2>
-                                <p class="text-gray-600 mb-4" x-text="selectedCourse.description"></p>
+                                <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2" x-text="selectedCourse.title"></h2>
+                                <p class="text-gray-600 dark:text-gray-300 mb-4" x-text="selectedCourse.description"></p>
                             </div>
 
                             <div class="grid grid-cols-2 gap-4 mb-6">
-                                <div class="bg-gray-50 p-4 rounded-lg">
+                                <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
                                     <div class="flex items-center mb-2">
                                         <x-heroicon-o-user class="h-5 w-5 text-gray-400 mr-2" />
-                                        <span class="text-sm font-medium text-gray-900">Instructor</span>
+                                        <span class="text-sm font-medium text-gray-900 dark:text-white">Instructor</span>
                                     </div>
-                                    <p class="text-gray-600" x-text="selectedCourse.instructor"></p>
+                                    <p class="text-gray-600 dark:text-gray-300" x-text="selectedCourse.instructor"></p>
                                 </div>
-                                <div class="bg-gray-50 p-4 rounded-lg">
+                                <div class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
                                     <div class="flex items-center mb-2">
                                         <x-heroicon-o-clock class="h-5 w-5 text-gray-400 mr-2" />
-                                        <span class="text-sm font-medium text-gray-900">Duration</span>
+                                        <span class="text-sm font-medium text-gray-900 dark:text-white">Duration</span>
                                     </div>
-                                    <p class="text-gray-600" x-text="selectedCourse.duration"></p>
+                                    <p class="text-gray-600 dark:text-gray-300" x-text="selectedCourse.duration"></p>
                                 </div>
                             </div>
 
                             <!-- Topics -->
                             <div class="mb-6">
-                                <h3 class="text-lg font-semibold text-gray-900 mb-3">What you'll learn</h3>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">What you'll learn</h3>
                                 <div class="flex flex-wrap gap-2">
                                     <template x-for="(topic, index) in selectedCourse.topics" :key="index">
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-50 text-blue-700 border border-blue-200"
+                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200 border border-blue-200 dark:border-blue-600"
                                               x-text="topic"></span>
                                     </template>
                                 </div>
@@ -96,14 +96,14 @@
                                     <x-heroicon-o-play class="h-5 w-5 mr-2" />
                                     Watch Preview
                                 </a>
-                                <button class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+                                <button class="px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                                     Add to Wishlist
                                 </button>
                             </div>
 
                             <!-- Mobile Button -->
                             <div class="lg:hidden mb-6">
-                                <a :href="`/courses/${selectedCourse.id}`"
+                                <a :href="`/teacher/courses/${selectedCourse.id}`"
                                    class="w-full bg-gray-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors flex items-center justify-center">
                                     <x-heroicon-o-academic-cap class="h-5 w-5 mr-2" />
                                     View Full Course
@@ -114,7 +114,7 @@
                 </div>
 
                 <!-- Right Panel -->
-                <div class="flex-1 lg:w-1/2 bg-gray-50 border-l border-gray-200 flex flex-col">
+                <div class="flex-1 lg:w-1/2 bg-gray-50 dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 flex flex-col">
                     <template x-if="selectedCourse">
                         <div class="h-full flex flex-col">
                             <div class="bg-gray-900 p-4">
@@ -127,31 +127,31 @@
                                 <p class="text-white text-sm opacity-90 text-center">Click to watch course preview</p>
                             </div>
 
-                            <div class="flex-1 flex flex-col min-h-0 bg-white">
-                                <div class="p-4 pb-2 border-b border-gray-200">
+                            <div class="flex-1 flex flex-col min-h-0 bg-white dark:bg-gray-900">
+                                <div class="p-4 pb-2 border-b border-gray-200 dark:border-gray-700">
                                     <div class="flex items-center justify-between">
-                                        <h3 class="text-lg font-semibold text-gray-900">Course Content</h3>
-                                        <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full"
+                                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Course Content</h3>
+                                        <span class="text-sm text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full"
                                               x-text="selectedCourse.lessons?.length + ' lessons'"></span>
                                     </div>
                                 </div>
 
                                 <div class="flex-1 p-4 overflow-y-auto">
                                     <template x-for="(lesson, index) in selectedCourse.lessons ?? []" :key="lesson.id">
-                                        <div class="group border border-gray-200 rounded-lg p-3 hover:bg-blue-50 hover:border-blue-300 transition-all cursor-pointer"
-                                             @click.stop="window.location.href = `/courses/${selectedCourse.id}/lessons/${lesson.id}`">
+                                        <div class="group border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:bg-blue-50 dark:hover:bg-blue-900 hover:border-blue-300 dark:hover:border-blue-400 transition-all cursor-pointer"
+                                             @click.stop="window.location.href = `/teacher/courses/${selectedCourse.id}/lessons/${lesson.id}`">
                                             <div class="flex items-center justify-between">
                                                 <div class="flex items-center space-x-3">
-                                                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                                                        <x-heroicon-o-play class="h-4 w-4 text-blue-600" />
+                                                    <div class="w-8 h-8 bg-blue-100 dark:bg-blue-800 rounded-full flex items-center justify-center">
+                                                        <x-heroicon-o-play class="h-4 w-4 text-blue-600 dark:text-blue-300" />
                                                     </div>
                                                     <div>
-                                                        <p class="text-sm font-medium text-gray-900" x-text="`${index + 1}. ${lesson.title}`"></p>
-                                                        <p class="text-xs text-gray-500" x-text="lesson.duration"></p>
+                                                        <p class="text-sm font-medium text-gray-900 dark:text-white" x-text="`${index + 1}. ${lesson.title}`"></p>
+                                                        <p class="text-xs text-gray-500 dark:text-gray-400" x-text="lesson.duration"></p>
                                                     </div>
                                                 </div>
                                                 <template x-if="lesson.is_free">
-                                                    <span class="px-2 py-0.5 text-xs rounded bg-green-100 text-green-800">Free</span>
+                                                    <span class="px-2 py-0.5 text-xs rounded bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">Free</span>
                                                 </template>
                                             </div>
                                         </div>
@@ -159,13 +159,13 @@
 
                                     <template x-if="!selectedCourse.lessons || selectedCourse.lessons.length === 0">
                                         <div class="text-center py-8">
-                                            <x-heroicon-o-academic-cap class="h-12 w-12 text-gray-300 mx-auto mb-3" />
-                                            <p class="text-gray-500 text-sm">No lessons available yet</p>
+                                            <x-heroicon-o-academic-cap class="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
+                                            <p class="text-gray-500 dark:text-gray-400 text-sm">No lessons available yet</p>
                                         </div>
                                     </template>
                                 </div>
 
-                                <div class="p-4 border-t border-gray-200 bg-gray-50">
+                                <div class="p-4 border-t border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
                                     <a :href="`/teacher/courses/${selectedCourse.id}`"
                                        class="w-full bg-gray-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center">
                                         <x-heroicon-o-academic-cap class="h-5 w-5 mr-2" />

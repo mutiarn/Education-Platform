@@ -11,9 +11,13 @@ use App\Http\Controllers\Teacher\LessonController;
 Route::prefix('teacher')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('teacher.dashboard');
     Route::prefix('/courses')->group(function () {
+        Route::get('/create', [CoursesController::class, 'create'])->name('teacher.courses.create');
+        Route::post('/store', [CoursesController::class, 'store'])->name('teacher.courses.store');
+
         Route::get('/', [CoursesController::class, 'index'])->name('teacher.courses');
         Route::get('/{id}', [CoursesController::class, 'show'])->name('teacher.courses.show');
-        Route::get('/{course}/lessons/{lesson}', [LessonController::class, 'lesson'])->name('courses.lessons.show');
+        Route::get('/{course}/lessons/{lesson}', [LessonController::class, 'show'])->name('courses.lessons.show');
+
     });
     Route::prefix('/quiz')->group(function () {
         Route::get('/', [QuizController::class, 'index'])->name('teacher.quiz');
