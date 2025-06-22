@@ -5,9 +5,6 @@
 
 @section('content')
 <div class="mb-8">
-            <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-1">
-                Welcome Back! 👋
-            </h1>
             <p class="text-gray-600 dark:text-gray-300">
                 Berikut adalah daftar kursus yang kamu kelola. Tetap semangat membagikan ilmu! 💡
             </p>
@@ -22,25 +19,29 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {{-- Course Card (example only) --}}
-            <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
+            <div class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 cursor-pointer">
+                <div class="aspect-video bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                    <x-heroicon-o-play-circle class="h-16 w-16 text-white opacity-80" />
+                </div>
                 <div class="p-4">
-                    <h2 class="text-lg font-semibold text-gray-800 dark:text-white">
-                        Course Title Here
-                    </h2>
-                    <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                        Short course description goes here. This is placeholder text.
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            Beginner
+                        </span>
+                        <div class="flex items-center">
+                            <x-heroicon-s-star class="h-4 w-4 text-yellow-400" />
+                            <span class="text-sm text-gray-600 ml-1">4.5</span>
+                        </div>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 mb-2">Basic Web Development</h3>
+                    <p class="text-sm text-gray-600 mb-3 line-clamp-2">
+                        Belajar HTML, CSS, dan dasar JavaScript untuk membangun website statis.
                     </p>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span>John Doe</span>
+                        <span>24 students</span>
+                    </div>
                 </div>
-                <div class="flex items-center justify-between px-4 py-2 bg-gray-100 dark:bg-gray-700 text-sm">
-                    <span class="text-gray-600 dark:text-gray-300">
-                        0 students
-                    </span>
-                    <a href="#"
-                       class="text-blue-600 hover:underline dark:text-blue-400">
-                        View
-                    </a>
-                </div>
-            </div>
 
             {{-- Tambahkan kartu lainnya di sini --}}
         </div>
