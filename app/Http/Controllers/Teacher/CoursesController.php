@@ -13,4 +13,12 @@ class CoursesController extends Controller
         $courses = Course::with('lessons')->get();
         return view('teachers.course.index', compact('courses'));
     }
+
+    public function show($id)
+    {
+        $course = Course::with('lessons')->findOrFail($id);
+        return view('teachers.course.show', [
+            'course' => $course
+        ]);
+    }
 }
