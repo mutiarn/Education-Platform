@@ -7,8 +7,8 @@
      x-transition:leave-start="opacity-100"
      x-transition:leave-end="opacity-0"
      class="fixed inset-0 z-50 overflow-y-auto"
-     style="display: none"
-     @keydown.escape.window="closeModal()">
+     @keydown.escape.window="closeModal()"
+     x-cloak>
 
     <!-- Overlay -->
     <div class="fixed inset-0 bg-black bg-opacity-50" @click="closeModal()"></div>
@@ -48,8 +48,7 @@
                                           x-text="selectedCourse.level"></span>
 
                                     <div class="flex items-center">
-                                        <x-heroicon-s-star class="h-5 w-5 text-yellow-400" />
-                                        <span class="text-sm text-gray-600 dark:text-gray-300 ml-1" x-text="selectedCourse.rating"></span>
+                                        <x-heroicon-s-users class="h-5 w-5  text-gray-400 dark:text-gray-400" />
                                         <span class="text-sm text-gray-400 dark:text-gray-400 ml-2">
                                             (<span x-text="selectedCourse.students.toLocaleString()"></span> students)
                                         </span>

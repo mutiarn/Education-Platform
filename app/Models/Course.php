@@ -8,11 +8,11 @@ class Course extends Model
 {
         protected $fillable = [
             'title', 'description', 'instructor', 'duration', 'level',
-            'students', 'rating', 'video_url', 'topics', 'price'
+            'students', 'video_url', 'topics', 'price'
         ];
 
         protected $casts = [
-            'topics' => 'array'
+            'topics' => 'array',
         ];
 
         public function lessons()

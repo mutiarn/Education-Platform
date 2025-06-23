@@ -20,8 +20,11 @@
         .sidebar-collapsed .sidebar-item {
             justify-content: center;
         }
+
+        [x-cloak] { display: none !important; }
+
     </style>
-    <script src="//unpkg.com/alpinejs" defer></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 dark-transition">
     <!-- Fixed Header -->

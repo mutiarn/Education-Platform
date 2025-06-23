@@ -33,9 +33,8 @@
 <div>
     <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">Recent Activity</h2>
     <ul class="bg-white dark:bg-gray-800 rounded shadow p-4 space-y-2 text-sm text-gray-700 dark:text-gray-300">
-        <li>📥 3 students submitted assignments in <strong class="text-gray-800 dark:text-gray-100">Web Development</strong></li>
+        <li>📥 3 students completed quiz in <strong class="text-gray-800 dark:text-gray-100">Web Development</strong></li>
         <li>👤 New student enrolled in <strong class="text-gray-800 dark:text-gray-100">UI/UX Fundamentals</strong></li>
-        <li>📅 Class rescheduled for <strong class="text-gray-800 dark:text-gray-100">JavaScript Basics</strong></li>
     </ul>
 </div>
 

@@ -16,6 +16,8 @@ Route::prefix('teacher')->group(function () {
 
         Route::get('/', [CoursesController::class, 'index'])->name('teacher.courses');
         Route::get('/{id}', [CoursesController::class, 'show'])->name('teacher.courses.show');
+        Route::get('/{id}/edit', [CoursesController::class, 'edit'])->name('teacher.courses.edit');
+        Route::put('/{id}', [CoursesController::class, 'update'])->name('teacher.courses.update');
         Route::get('/{course}/lessons/{lesson}', [LessonController::class, 'show'])->name('courses.lessons.show');
 
     });

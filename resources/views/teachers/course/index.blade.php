@@ -20,8 +20,8 @@
 
     <div class="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         @forelse ($courses as $course)
-        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200 cursor-pointer"
-             @click="openModal(@js([
+        @php
+            $courseData = [
                 'id' => $course->id,
                 'title' => $course->title,
                 'description' => $course->description,
@@ -33,31 +33,46 @@
                 'videoUrl' => $course->video_url,
                 'topics' => $course->topics,
                 'lessons' => $course->lessons,
-            ]))">
-            <div class="aspect-video bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-                <x-heroicon-o-play-circle class="h-16 w-16 text-white opacity-80" />
-            </div>
-            <div class="p-4">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
-                        {{ $course->level === 'Advanced' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 
-                           ($course->level === 'Intermediate' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' : 
-                           'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200') }}">
-                        {{ $course->level }}
-                    </span>
-                    <div class="flex items-center">
-                        <x-heroicon-s-star class="h-4 w-4 text-yellow-400" />
-                        <span class="text-sm text-gray-600 dark:text-gray-300 ml-1">{{ $course->rating }}</span>
+            ];
+        @endphp
+
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200">
+            {{-- Area atas (thumbnail + info) --}}
+            <div class="cursor-pointer" @click="openModal(@js($courseData))">
+                <div class="aspect-video bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                    <x-heroicon-o-play-circle class="h-16 w-16 text-white opacity-80" />
+                </div>
+                <div class="p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                            {{ $course->level === 'Advanced' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 
+                               ($course->level === 'Intermediate' ? 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200' : 
+                               'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200') }}">
+                            {{ $course->level }}
+                        </span>
+                        <div class="flex items-center">
+                            <x-heroicon-s-star class="h-4 w-4 text-yellow-400" />
+                            <span class="text-sm text-gray-600 dark:text-gray-300 ml-1">{{ $course->rating }}</span>
+                        </div>
+                    </div>
+                    <h3 class="font-semibold text-gray-900 dark:text-white mb-2">{{ $course->title }}</h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">
+                        {{ Str::limit($course->description, 100) }}
+                    </p>
+                    <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                        <span>{{ $course->instructor }}</span>
+                        <span>{{ number_format($course->students) }} students</span>
                     </div>
                 </div>
-                <h3 class="font-semibold text-gray-900 dark:text-white mb-2">{{ $course->title }}</h3>
-                <p class="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">
-                    {{ Str::limit($course->description, 100) }}
-                </p>
-                <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                    <span>{{ $course->instructor }}</span>
-                    <span>{{ number_format($course->students) }} students</span>
-                </div>
+            </div>
+
+            {{-- Tombol Edit dan View --}}
+            <div class="px-4 pb-4 flex justify-between items-center text-sm">
+                <a href="{{ route('teacher.courses.edit', $course->id) }}"
+                   class="text-yellow-500 hover:underline">Edit</a>
+                <a href="javascript:void(0)"
+                   @click.stop="openModal(@js($courseData))"
+                   class="text-blue-500 hover:underline">View</a>
             </div>
         </div>
         @empty

@@ -27,8 +27,7 @@
                         {{ $course->level }}
                     </span>
                     <div class="flex items-center">
-                        <x-heroicon-s-star class="h-5 w-5 text-yellow-400" />
-                        <span class="text-sm font-medium ml-1 text-gray-800 dark:text-gray-100">{{ $course->rating }}</span>
+                        <x-heroicon-s-users class="h-5 w-5  text-gray-400 dark:text-gray-400" />
                         <span class="text-sm text-gray-500 ml-2 dark:text-gray-400">({{ number_format($course->students) }} students)</span>
                     </div>
                     <div class="flex items-center text-sm text-gray-500 dark:text-gray-400">
@@ -139,7 +138,6 @@
                         <div class="flex justify-between"><span>Duration:</span><span>{{ $course->duration }}</span></div>
                         <div class="flex justify-between"><span>Level:</span><span>{{ $course->level }}</span></div>
                         <div class="flex justify-between"><span>Students:</span><span>{{ number_format($course->students) }}</span></div>
-                        <div class="flex justify-between"><span>Rating:</span><span>{{ $course->rating }}</span></div>
                         <div class="flex justify-between"><span>Lessons:</span><span>{{ $course->lessons->count() }}</span></div>
                         <div class="flex justify-between"><span>Price:</span><span>${{ number_format($course->price, 2) }}</span></div>
                     </div>

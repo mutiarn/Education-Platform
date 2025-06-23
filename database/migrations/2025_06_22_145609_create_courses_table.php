@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('duration')->nullable();
             $table->string('level')->default('Beginner');
             $table->integer('students')->default(0);
-            $table->float('rating', 2, 1)->default(0);
             $table->string('video_url')->nullable();
             $table->json('topics')->nullable();
             $table->decimal('price', 8, 2)->default(0);
