@@ -25,6 +25,17 @@
     <!-- Main Content -->
     <main>
         @yield('content')
+            @if (session('success'))
+        <div
+            x-data="{ show: true }"
+            x-init="setTimeout(() => show = false, 3000)"
+            x-show="show"
+            x-transition
+            class="mb-6 bg-green-100 text-green-800 px-4 py-2 rounded border border-green-300"
+        >
+            {{ session('success') }}
+        </div>
+    @endif
     </main>
 
     <!-- Footer -->

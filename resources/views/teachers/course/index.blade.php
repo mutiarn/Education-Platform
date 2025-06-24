@@ -27,7 +27,6 @@
                 'description' => $course->description,
                 'instructor' => $course->instructor,
                 'level' => $course->level,
-                'rating' => $course->rating,
                 'students' => $course->students,
                 'duration' => $course->duration,
                 'videoUrl' => $course->video_url,
@@ -50,10 +49,6 @@
                                'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200') }}">
                             {{ $course->level }}
                         </span>
-                        <div class="flex items-center">
-                            <x-heroicon-s-star class="h-4 w-4 text-yellow-400" />
-                            <span class="text-sm text-gray-600 dark:text-gray-300 ml-1">{{ $course->rating }}</span>
-                        </div>
                     </div>
                     <h3 class="font-semibold text-gray-900 dark:text-white mb-2">{{ $course->title }}</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">

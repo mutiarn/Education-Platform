@@ -72,9 +72,12 @@
         <div class="lg:col-span-2 space-y-6">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
                 <div class="px-6 py-5">
-                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">What you'll learn</h2>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">What you'll learn</h2>                 
+                    @php
+                        $topics = is_string($course->topics) ? explode(',', $course->topics) : ($course->topics ?? []);
+                    @endphp
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        @foreach($course->topics as $topic)
+                        @foreach($topics as $topic)
                             <div class="flex items-center">
                                 <x-heroicon-o-check-circle class="h-5 w-5 text-green-500 mr-3" />
                                 <span class="text-gray-700 dark:text-gray-300">{{ $topic }}</span>

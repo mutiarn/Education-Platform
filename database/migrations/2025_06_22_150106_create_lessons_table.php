@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('duration'); // e.g., "15:30"
             $table->string('video_url')->nullable();
             $table->integer('order')->default(0); // For lesson ordering
-            $table->enum('type', ['video', 'text', 'quiz'])->default('video');
+            $table->enum('type', ['video', 'text', 'link'])->default('video');
             $table->boolean('is_free')->default(false); // Some lessons can be free preview
             $table->timestamps();
         });

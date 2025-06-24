@@ -30,17 +30,35 @@
 
 <div class="max-w-7xl mx-auto flex">
     <!-- Main Content - Video Player -->
+    @php
+        use Illuminate\Support\Str;
+
+        function getEmbedUrl($url)
+        {
+            if (Str::startsWith($url, 'https://youtu.be/')) {
+                return str_replace('https://youtu.be/', 'https://www.youtube.com/embed/', $url);
+            }
+            if (Str::contains($url, 'watch?v=')) {
+                return preg_replace('/watch\\?v=/', 'embed/', $url);
+            }
+            return $url;
+        }
+
+        $embedUrl = getEmbedUrl($lesson->video_url);
+    @endphp
+
     <div class="flex-1 bg-white dark:bg-gray-900">
         <div class="aspect-video bg-gray-900 flex items-center justify-center">
-            @if($lesson->video_url)
-                <div class="w-full h-full relative">
-                    <iframe src="{{ $lesson->video_url }}" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
-                </div>
+            @if (!empty($lesson->video_url))
+                <iframe 
+                    class="w-full h-64 md:h-96 rounded-lg"
+                    src="{{ $embedUrl }}" 
+                    frameborder="0" 
+                    allowfullscreen 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                </iframe>
             @else
-                <div class="text-center">
-                    <x-heroicon-o-play-circle class="h-24 w-24 text-gray-400 mx-auto mb-4" />
-                    <p class="text-gray-400 text-lg">Video coming soon</p>
-                </div>
+                <p class="text-red-500">Video not available.</p>
             @endif
         </div>
 

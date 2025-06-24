@@ -80,10 +80,11 @@
                             <div class="mb-6">
                                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">What you'll learn</h3>
                                 <div class="flex flex-wrap gap-2">
-                                    <template x-for="(topic, index) in selectedCourse.topics" :key="index">
-                                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200 border border-blue-200 dark:border-blue-600"
-                                              x-text="topic"></span>
-                                    </template>
+                                <template x-for="(topic, index) in (selectedCourse.topics ? selectedCourse.topics.split(',') : [])" :key="index">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200 border border-blue-200 dark:border-blue-600"
+                                        x-text="topic.trim()">
+                                    </span>
+                                </template>
                                 </div>
                             </div>
 
