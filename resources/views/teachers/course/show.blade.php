@@ -2,9 +2,13 @@
 
 @section('title', 'My Courses')
 @section('header')
-    <a href="{{ route('teacher.courses') }}" class="text-white hover:text-white">My Courses</a> &gt; 
-    <span class="text-white font-semibold">{{ $course->title }}</span>
+    <div class="text-white text-lg">
+        <a href="{{ route('teacher.courses') }}" class="hover:underline">My Courses</a>
+        <span class="mx-2 text-gray-400">/</span>
+        <span class="font-semibold">{{ $course->title }}</span>
+    </div>
 @endsection
+
 
 @section('content')
 <div class="space-y-6">

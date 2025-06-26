@@ -21,7 +21,6 @@
                 <th class="px-6 py-3 text-left font-semibold">Name</th>
                 <th class="px-6 py-3 text-left font-semibold">Email</th>
                 <th class="px-6 py-3 text-left font-semibold">Course</th>
-                <th class="px-6 py-3 text-left font-semibold">Action</th>
             </tr>
         </thead>
     <tbody>
@@ -31,10 +30,6 @@
         <td class="px-6 py-4">John Doe</td>
         <td class="px-6 py-4">john@example.com</td>
         <td class="px-6 py-4">Web Development</td>
-        <td class="px-6 py-4">
-            <a href="#"
-                class="text-blue-600 hover:underline dark:text-blue-400">View</a>
-        </td>
     </tr>
     </tbody>
     </table>

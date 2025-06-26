@@ -21,18 +21,41 @@
             justify-content: center;
         }
 
-        [x-cloak] { display: none !important; }
+        .sidebar-collapsed-initial #sidebar {
+            width: 4rem !important;
+            transition: none !important;
+        }
 
+        .sidebar-collapsed-initial #main-content {
+            margin-left: 4rem !important;
+            transition: none !important;
+        }
+
+        /* Opsional, sembunyikan teks atau ikon di sidebar kalau collapse */
+        .sidebar-collapsed-initial .sidebar-text {
+            display: none !important;
+        }
+        [x-cloak] { display: none !important; }
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script>
+        (function() {
+            const collapsed = localStorage.getItem('sidebar-collapsed') === 'true';
+            if (collapsed) {
+                document.documentElement.classList.add('sidebar-collapsed-initial');
+            }
+        })();
+    </script>
+
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 dark-transition">
     <!-- Fixed Header -->
-    <header class="fixed top-0 left-0 right-0 z-30  bg-gray-800 dark:bg-gray-950 shadow-sm border-b border-gray-200 dark:border-gray-700 dark-transition">
+    <header class="fixed top-0 left-0 right-0 z-30 bg-gray-800 dark:bg-gray-950 shadow-sm border-b border-gray-200 dark:border-gray-700 dark-transition">
         <div class="flex items-center justify-between px-4 py-3">
             <!-- Left Section: Hamburger + Logo/Title -->
             <div class="flex items-center space-x-4">
-                <button id="sidebar-toggle" class="p-2 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-800  transition-colors duration-200">
+                <button id="sidebar-toggle" class="p-2 rounded-lg hover:bg-gray-700 dark:hover:bg-gray-800 transition-colors duration-200">
                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                     </svg>
@@ -57,7 +80,6 @@
                 <!-- Mobile: Page Title only (next to hamburger) -->
                 <div class="md:hidden">
                     <span class="font-medium text-lg text-white">
-                        
                         @if(request()->routeIs('teacher.dashboard'))
                             Dashboard
                         @elseif(request()->routeIs('teacher.courses'))
@@ -66,15 +88,12 @@
                             Quiz
                         @elseif(request()->routeIs('teacher.students'))
                             Students
-                        @elseif(request()->routeIs('teacher.inbox'))
-                            Inbox
                         @else
                             @yield('page_title', 'Dashboard')
                         @endif
                     </span>
                 </div>
             </div>
-
             <!-- Right Section: User Menu -->
             <div class="flex items-center space-x-4">
                 <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-700 transition-all duration-200">
@@ -86,13 +105,71 @@
                     </svg>
                 </button>
                 
-                <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-gray-700">
-                    <span class="text-xs font-medium">AU</span>
+            <!-- Profile dropdown trigger -->
+            <div class="relative" x-data="{ open: false }">
+                <button @click="open = !open" @click.away="open = false" 
+                        class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-xs font-medium text-gray-700">
+                    AU
+                </button>
+                <!-- Dropdown -->
+                <div x-show="open" x-transition
+                    class="absolute right-0 z-50 mt-2 w-64 origin-top-right rounded-lg bg-white shadow-xl ring-1 ring-black ring-opacity-5 p-4"
+                    @click.away="open = false">
+                    
+                    <!-- User info -->
+                    <div class="flex items-center space-x-4 pb-4 border-b border-gray-200 mb-4">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658ab4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=96&h=96&q=80"
+                            alt="Profile picture"
+                            class="w-14 h-14 rounded-full object-cover bg-gray-100">
+                        <div>
+                            <div class="text-sm font-semibold text-gray-900">John Doe</div>
+                            <div class="text-xs text-gray-500">john.doe@example.com</div>
+                            <!-- Role badge -->
+                            <div class="mt-1 inline-flex items-center gap-1 px-2 py-0.5 text-xs bg-blue-100 text-blue-700 rounded-full">
+                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"></path>
+                                </svg>
+                                <span>Teacher</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Settings -->
+                    <a href="{{ route('profile.settings') }}" class="flex items-center justify-between pl-3 pr-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">
+                        <span class="flex items-center gap-2">
+                            <!-- Icon kiri (Settings) -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.28Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
+                            </svg>
+                            Settings
+                        </span>
+                        <!-- Icon kanan (Arrow) -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </a>
+                    <!-- Sign out -->
+                    <form method="POST" action="/logout">
+                        @csrf
+                        <button type="submit" class="flex items-center gap-2 w-full text-left pl-3 pr-4 py-2 text-sm text-gray-700 hover:bg-red-50 rounded">
+                            <!-- Icon Logout -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                            </svg>
+                            Sign out
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </header>
-
     <div class="flex min-h-screen pt-16">
         <!-- Collapsible Sidebar -->
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-20 bg-gray-800 dark:bg-gray-950 border-r border-gray-200 dark:border-gray-700 sidebar-transition pt-16 w-64 -translate-x-full lg:translate-x-0">
@@ -112,7 +189,6 @@
                             </svg>
                             <span class="sidebar-text transition-all duration-300 whitespace-nowrap">Dashboard</span>
                         </a>
-
                         <!-- My Courses -->
                         <a href="{{ route('teacher.courses') }}"
                         class="sidebar-item flex items-center gap-3 px-3 py-3 mb-1 rounded-lg transition duration-200
@@ -124,7 +200,6 @@
                             </svg>
                             <span class="sidebar-text transition-all duration-300 whitespace-nowrap">My Courses</span>
                         </a>
-
                         <!-- Quiz -->
                         <a href="{{ route('teacher.quiz') }}"
                         class="sidebar-item flex items-center gap-3 px-3 py-3 mb-1 rounded-lg transition duration-200
@@ -136,7 +211,6 @@
                             </svg>
                             <span class="sidebar-text transition-all duration-300 whitespace-nowrap">Quiz</span>
                         </a>
-
                         <!-- Students -->
                         <a href="{{ route('teacher.students') }}"
                         class="sidebar-item flex items-center gap-3 px-3 py-3 mb-1 rounded-lg transition duration-200
@@ -148,23 +222,10 @@
                             </svg>
                             <span class="sidebar-text transition-all duration-300 whitespace-nowrap">Student</span>
                         </a>
-
-                        <!-- Inbox -->
-                        <a href="{{ route('teacher.inbox') }}"
-                        class="sidebar-item flex items-center gap-3 px-3 py-3 mb-1 rounded-lg transition duration-200
-                                hover:bg-gray-700 dark:hover:bg-gray-800
-                                {{ request()->routeIs('teacher.inbox') ? 'bg-gray-700 dark:bg-gray-800 text-white font-semibold' : 'text-gray-300' }} group/item">
-                            <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 3.75H6.912a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859M12 3v8.25m0 0-3-3m3 3 3-3"/>
-                            </svg>
-                            <span class="sidebar-text transition-all duration-300 whitespace-nowrap">Inbox</span>
-                        </a>
                     </div>
-
+                </div>
             </nav>
         </aside>
-
         <!-- Main Content Area -->
         <main id="main-content" class="flex-1 transition-all duration-300 lg:ml-64">
             <div class="p-6">
@@ -177,7 +238,6 @@
                         <span>{{ session('success') }}</span>
                     </div>
                 @endif
-
                 @if(session('error'))
                     <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-300 px-4 py-3 rounded-lg mb-6 flex items-center dark-transition">
                         <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -186,7 +246,6 @@
                         <span>{{ session('error') }}</span>
                     </div>
                 @endif
-
                 @if($errors->any())
                     <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-300 px-4 py-3 rounded-lg mb-6 dark-transition">
                         <div class="flex items-center mb-2">
@@ -202,16 +261,13 @@
                         </ul>
                     </div>
                 @endif
-
                 <!-- Main Content -->
                 @yield('content')
             </div>
         </main>
     </div>
-
     <!-- Overlay for mobile -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-10 hidden"></div>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const sidebar = document.getElementById('sidebar');
@@ -223,7 +279,6 @@
             
             let sidebarOpen = false;
             let sidebarCollapsed = false;
-
             // Theme functionality
             function setTheme(isDark) {
                 if (isDark) {
@@ -234,7 +289,6 @@
                     localStorage.setItem('theme', 'light');
                 }
             }
-
             const savedTheme = localStorage.getItem('theme');
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             
@@ -243,69 +297,50 @@
             } else {
                 setTheme(false);
             }
-
             themeToggle.addEventListener('click', function() {
                 const isDark = html.classList.contains('dark');
                 setTheme(!isDark);
             });
-
             // Check if mobile
             function isMobile() {
                 return window.innerWidth < 1024;
             }
+           function toggleSidebar() {
+    if (isMobile()) {
+        // Mobile behavior
+        sidebarOpen = !sidebarOpen;
+        if (sidebarOpen) {
+            sidebar.classList.remove('-translate-x-full');
+            sidebar.classList.add('translate-x-0');
+            sidebarOverlay.classList.remove('hidden');
+        } else {
+            sidebar.classList.add('-translate-x-full');
+            sidebar.classList.remove('translate-x-0');
+            sidebarOverlay.classList.add('hidden');
+        }
+    } else {
+        // Desktop behavior
+        sidebarCollapsed = !sidebarCollapsed;
+        localStorage.setItem('sidebar-collapsed', sidebarCollapsed);
 
-            // Toggle sidebar
-            function toggleSidebar() {
-                if (isMobile()) {
-                    // Mobile behavior
-                    sidebarOpen = !sidebarOpen;
-                    if (sidebarOpen) {
-                        sidebar.classList.remove('-translate-x-full');
-                        sidebar.classList.add('translate-x-0');
-                        sidebarOverlay.classList.remove('hidden');
-                    } else {
-                        sidebar.classList.add('-translate-x-full');
-                        sidebar.classList.remove('translate-x-0');
-                        sidebarOverlay.classList.add('hidden');
-                    }
-                } else {
-                    // Desktop behavior
-                    sidebarCollapsed = !sidebarCollapsed;
-                    if (sidebarCollapsed) {
-                        sidebar.classList.add('sidebar-collapsed');
-                        sidebar.style.width = '4rem';
-                        mainContent.style.marginLeft = '4rem';
-                    } else {
-                        sidebar.classList.remove('sidebar-collapsed');
-                        sidebar.style.width = '16rem';
-                        mainContent.style.marginLeft = '16rem';
-                    }
-                }
-            }
+        if (sidebarCollapsed) {
+            sidebar.classList.add('sidebar-collapsed');
+            sidebar.style.width = '4rem';
+            mainContent.style.marginLeft = '4rem';
+        } else {
+            sidebar.classList.remove('sidebar-collapsed');
+            sidebar.style.width = '16rem';
+            mainContent.style.marginLeft = '16rem';
+        }
 
-            // Initialize sidebar state
-            function initializeSidebar() {
-                if (isMobile()) {
-                    // Mobile: sidebar hidden by default
-                    sidebarOpen = false;
-                    sidebar.classList.add('-translate-x-full');
-                    sidebar.classList.remove('translate-x-0');
-                    sidebarOverlay.classList.add('hidden');
-                    mainContent.style.marginLeft = '0';
-                    sidebar.style.width = '16rem';
-                    sidebar.classList.remove('sidebar-collapsed');
-                } else {
-                    // Desktop: sidebar visible by default
-                    sidebarOpen = true;
-                    sidebarCollapsed = false;
-                    sidebar.classList.remove('-translate-x-full');
-                    sidebar.classList.add('translate-x-0');
-                    sidebar.classList.remove('sidebar-collapsed');
-                    sidebarOverlay.classList.add('hidden');
-                    sidebar.style.width = '16rem';
-                    mainContent.style.marginLeft = '16rem';
-                }
-            }
+        // 🔥 Delay penghapusan initial collapse biar animasinya smooth
+        setTimeout(() => {
+            document.documentElement.classList.remove('sidebar-collapsed-initial');
+        }, 10);
+    }
+}
+
+
 
             // Event listeners
             sidebarToggle.addEventListener('click', toggleSidebar);
@@ -314,15 +349,12 @@
                     toggleSidebar();
                 }
             });
-
             // Handle window resize
             window.addEventListener('resize', function() {
                 initializeSidebar();
             });
-
             // Initialize on load
             initializeSidebar();
-
             // Dropdown functionality
             window.toggleDropdown = function(dropdownId) {
                 const dropdown = document.getElementById(dropdownId);
@@ -338,7 +370,6 @@
             };
         });
     </script>
-
     @push('scripts')
     <script>
         function courseModal() {

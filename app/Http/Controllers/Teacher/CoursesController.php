@@ -75,7 +75,7 @@ class CoursesController extends Controller
             'price' => $request->price,
             'video_url' => $this->convertYoutubeToEmbed($request->video_url),
             'topics' => $request->topics,
-            'instructor' => auth()->user()->name ?? 'Unknown',
+            'instructor' => Auth::user()->name ?? 'Unknown',
         ]);
 
 
