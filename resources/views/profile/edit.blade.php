@@ -1,10 +1,5 @@
-@extends('layouts.teacher')
-
-@section('title', 'Edit Profile')
-@section('header', 'Edit Profile')
-
-@section('content')
-<div class="max-w-6xl mx-auto space-y-10"> {{-- FORM LEBIH LEBAR --}}
+<x-layouts.app title="Edit Kategori">
+    <div class="max-w-6xl mx-auto space-y-10"> {{-- FORM LEBIH LEBAR --}}
 
     <div class="flex justify-between items-center">
         <a href="{{ route('profile.settings') }}"
@@ -21,23 +16,16 @@
                 <x-heroicon-o-user class="h-6 w-6 mr-3 text-gray-400" />
                 Edit Profile
             </h2>
-            <form method="POST" action="{{ route('profile.edit') }}" class="space-y-8">
+            <form method="POST" action="{{ route('profile.update') }}" class="space-y-8">
                 @csrf
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <label for="first_name" class="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2">First Name</label>
-                        <input name="first_name" type="text" value="John" id="first_name"
-                            class="block w-full px-4 py-3 text-base rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    </div>
-                    <div>
-                        <label for="last_name" class="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2">Last Name</label>
-                        <input name="last_name" type="text" value="Doe" id="last_name"
-                            class="block w-full px-4 py-3 text-base rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    </div>
+                <div>
+                    <label for="name" class="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name</label>
+                    <input name="name" type="text" value="{{ old('name', auth()->user()->name) }}" id="name"
+                        class="block w-full px-4 py-3 text-base rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 </div>
                 <div>
                     <label for="email" class="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
-                    <input name="email" type="email" value="john@example.com" id="email"
+                    <input name="email" type="email" value="{{ old('email', auth()->user()->email) }}" id="email"
                         class="block w-full px-4 py-3 text-base rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 </div>
                 <div class="pt-2">
@@ -74,4 +62,4 @@
     </div>
 
 </div>
-@endsection
+</x-layouts.app>

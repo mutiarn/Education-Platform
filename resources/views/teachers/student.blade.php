@@ -1,10 +1,5 @@
-@extends('layouts.teacher')
-
-@section('title', 'Students')
-@section('header', 'Students')
-
-@section('content')
-<div class="mb-6">
+<x-layouts.app title="Student">
+    <div class="mb-6">
     <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-1">
         Daftar Siswa 🧑‍🎓
     </h1>
@@ -23,15 +18,22 @@
                 <th class="px-6 py-3 text-left font-semibold">Course</th>
             </tr>
         </thead>
-    <tbody>
-    {{-- Example row --}}
-    <tr class="border-b dark:border-gray-700">
-        <td class="px-6 py-4">1</td>
-        <td class="px-6 py-4">John Doe</td>
-        <td class="px-6 py-4">john@example.com</td>
-        <td class="px-6 py-4">Web Development</td>
-    </tr>
-    </tbody>
+        <tbody>
+            @forelse($students as $index => $student)
+                <tr class="border-b dark:border-gray-700">
+                    <td class="px-6 py-4">{{ $index + 1 }}</td>
+                    <td class="px-6 py-4">{{ $student->name }}</td>
+                    <td class="px-6 py-4">{{ $student->email }}</td>
+                    <td class="px-6 py-4">{{ $student->course->title ?? '-' }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="4" class="text-center px-6 py-6 text-gray-500 dark:text-gray-400">
+                        Belum ada siswa yang terdaftar.
+                    </td>
+                </tr>
+            @endforelse
+        </tbody>
     </table>
 </div>
-@endsection
+</x-layouts.app>

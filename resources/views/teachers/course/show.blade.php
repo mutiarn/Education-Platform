@@ -1,17 +1,13 @@
-@extends('layouts.teacher')
+<x-layouts.app title="My Course">
+    <x-slot name="header">
+        <nav class="text-lg text-gray-800 dark:text-gray-100 font-semibold">
+            <a href="{{ route('teacher.courses') }}" class="hover:underline text-blue-600 dark:text-blue-400">My Courses</a>
+            <span class="mx-2">/</span>
+            <span>{{ $course->title }}</span>
+        </nav>
+    </x-slot>
 
-@section('title', 'My Courses')
-@section('header')
-    <div class="text-white text-lg">
-        <a href="{{ route('teacher.courses') }}" class="hover:underline">My Courses</a>
-        <span class="mx-2 text-gray-400">/</span>
-        <span class="font-semibold">{{ $course->title }}</span>
-    </div>
-@endsection
-
-
-@section('content')
-<div class="space-y-6">
+    <div class="space-y-6">
     <!-- Course Header -->
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
         <div class="relative">
@@ -97,8 +93,8 @@
                     <div class="space-y-3">
                         @foreach($course->lessons as $lesson)
                             <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
-                                <a href="{{ route('courses.lessons.show', [$course->id, $lesson->id]) }}"
-                                   class="flex items-center justify-between group">
+                                <a href="{{ route('teacher.courses.lessons.show', ['course' => $course->id, 'lesson' => $lesson->id]) }}"
+                                class="flex items-center justify-between group">
                                     <div class="flex items-center space-x-4">
                                         <div class="w-10 h-10 bg-blue-100 dark:bg-blue-800 rounded-full flex items-center justify-center group-hover:bg-blue-200 dark:group-hover:bg-blue-700 transition">
                                             <x-heroicon-o-play class="h-5 w-5 text-blue-600 dark:text-blue-300" />
@@ -120,6 +116,7 @@
                                 </a>
                             </div>
                         @endforeach
+
                     </div>
                 </div>
             </div>
@@ -170,4 +167,4 @@
         </a>
     </div>
 </div>
-@endsection
+</x-layouts.app>

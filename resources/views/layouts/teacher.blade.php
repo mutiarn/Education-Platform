@@ -22,12 +22,12 @@
         }
 
         .sidebar-collapsed-initial #sidebar {
-            width: 4rem !important;
+            width: 5rem !important;
             transition: none !important;
         }
 
         .sidebar-collapsed-initial #main-content {
-            margin-left: 4rem !important;
+            margin-left: 5rem !important;
             transition: none !important;
         }
 
@@ -35,6 +35,7 @@
         .sidebar-collapsed-initial .sidebar-text {
             display: none !important;
         }
+        
         [x-cloak] { display: none !important; }
     </style>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -105,45 +106,48 @@
                     </svg>
                 </button>
                 
-            <!-- Profile dropdown trigger -->
-            <div class="relative" x-data="{ open: false }">
-                <button @click="open = !open" @click.away="open = false" 
-                        class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-xs font-medium text-gray-700">
-                    AU
-                </button>
-                <!-- Dropdown -->
-                <div x-show="open" x-transition
-                    class="absolute right-0 z-50 mt-2 w-64 origin-top-right rounded-lg bg-white shadow-xl ring-1 ring-black ring-opacity-5 p-4"
-                    @click.away="open = false">
-                    
-                    <!-- User info -->
-                    <div class="flex items-center space-x-4 pb-4 border-b border-gray-200 mb-4">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658ab4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=96&h=96&q=80"
-                            alt="Profile picture"
-                            class="w-14 h-14 rounded-full object-cover bg-gray-100">
-                        <div>
-                            <div class="text-sm font-semibold text-gray-900">John Doe</div>
-                            <div class="text-xs text-gray-500">john.doe@example.com</div>
-                            <!-- Role badge -->
-                            <div class="mt-1 inline-flex items-center gap-1 px-2 py-0.5 text-xs bg-blue-100 text-blue-700 rounded-full">
-                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"></path>
-                                </svg>
-                                <span>Teacher</span>
+                        @php
+                            $name = Auth::user()->name ?? 'User';
+                            $initials = collect(explode(' ', $name))->map(fn($n) => strtoupper($n[0]))->take(2)->implode('');
+                        @endphp
+                        <div x-data="{ open: false }" class="relative">
+                            <button @click="open = !open"
+                                    class="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-xs font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    {{ $initials }}
+                            </button>
+
+                        <!-- Dropdown -->
+                        <div x-show="open" x-transition @click.away="open = false"
+                           class="absolute right-0 z-50 mt-2 w-64 origin-top-right rounded-lg bg-white shadow-xl ring-1 ring-black ring-opacity-5 p-4"
+                            style="display: none;">
+
+                            <!-- User info -->
+                            <div class="flex items-center space-x-4 border-b border-gray-200 mb-4">
+                                <img src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name ?? 'User') }}"
+                                    alt="Profile picture"
+                                    class="w-14 h-14 rounded-full object-cover bg-gray-100">
+                                <div>
+                                    <div class="text-sm font-semibold text-gray-900">{{ auth()->user()->name }}</div>
+                                    <div class="text-xs text-gray-500">{{ auth()->user()->email }}</div>
+                                    
+                                    <!-- Role badge -->
+                                    <div class="mt-1 inline-flex items-center gap-1 px-2 py-0.5 text-xs bg-blue-100 text-blue-700 rounded-full">
+                                        <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" stroke-width="2"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
+                                        </svg>
+                                        <span>{{ auth()->user()->role->name ?? 'User' }}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
                     <!-- Settings -->
                     <a href="{{ route('profile.settings') }}" class="flex items-center justify-between pl-3 pr-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded">
                         <span class="flex items-center gap-2">
                             <!-- Icon kiri (Settings) -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.28Z" />
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M15 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                             </svg>
                             Settings
                         </span>
@@ -306,41 +310,39 @@
                 return window.innerWidth < 1024;
             }
            function toggleSidebar() {
-    if (isMobile()) {
-        // Mobile behavior
-        sidebarOpen = !sidebarOpen;
-        if (sidebarOpen) {
-            sidebar.classList.remove('-translate-x-full');
-            sidebar.classList.add('translate-x-0');
-            sidebarOverlay.classList.remove('hidden');
-        } else {
-            sidebar.classList.add('-translate-x-full');
-            sidebar.classList.remove('translate-x-0');
-            sidebarOverlay.classList.add('hidden');
+                if (isMobile()) {
+                    // Mobile behavior
+                    sidebarOpen = !sidebarOpen;
+                    if (sidebarOpen) {
+                        sidebar.classList.remove('-translate-x-full');
+                        sidebar.classList.add('translate-x-0');
+                        sidebarOverlay.classList.remove('hidden');
+                    } else {
+                        sidebar.classList.add('-translate-x-full');
+                        sidebar.classList.remove('translate-x-0');
+                        sidebarOverlay.classList.add('hidden');
+                    }
+                } else {
+                    // Desktop behavior
+                    sidebarCollapsed = !sidebarCollapsed;
+                    localStorage.setItem('sidebar-collapsed', sidebarCollapsed);
+
+                    if (sidebarCollapsed) {
+                        sidebar.classList.add('sidebar-collapsed');
+                        sidebar.style.width = '5rem';
+                        mainContent.style.marginLeft = '5rem';
+                    } else {
+                        sidebar.classList.remove('sidebar-collapsed');
+                        sidebar.style.width = '16rem';
+                        mainContent.style.marginLeft = '16rem';
+                    }
+
+                    // 🔥 Delay penghapusan initial collapse biar animasinya smooth
+                    setTimeout(() => {
+                        document.documentElement.classList.remove('sidebar-collapsed-initial');
+                    }, 10);
+                }
         }
-    } else {
-        // Desktop behavior
-        sidebarCollapsed = !sidebarCollapsed;
-        localStorage.setItem('sidebar-collapsed', sidebarCollapsed);
-
-        if (sidebarCollapsed) {
-            sidebar.classList.add('sidebar-collapsed');
-            sidebar.style.width = '4rem';
-            mainContent.style.marginLeft = '4rem';
-        } else {
-            sidebar.classList.remove('sidebar-collapsed');
-            sidebar.style.width = '16rem';
-            mainContent.style.marginLeft = '16rem';
-        }
-
-        // 🔥 Delay penghapusan initial collapse biar animasinya smooth
-        setTimeout(() => {
-            document.documentElement.classList.remove('sidebar-collapsed-initial');
-        }, 10);
-    }
-}
-
-
 
             // Event listeners
             sidebarToggle.addEventListener('click', toggleSidebar);
@@ -349,25 +351,8 @@
                     toggleSidebar();
                 }
             });
-            // Handle window resize
-            window.addEventListener('resize', function() {
-                initializeSidebar();
-            });
-            // Initialize on load
+
             initializeSidebar();
-            // Dropdown functionality
-            window.toggleDropdown = function(dropdownId) {
-                const dropdown = document.getElementById(dropdownId);
-                const arrow = document.getElementById(dropdownId.replace('-dropdown', '-arrow'));
-                
-                if (dropdown.classList.contains('hidden')) {
-                    dropdown.classList.remove('hidden');
-                    arrow.style.transform = 'rotate(180deg)';
-                } else {
-                    dropdown.classList.add('hidden');
-                    arrow.style.transform = 'rotate(0deg)';
-                }
-            };
         });
     </script>
     @push('scripts')

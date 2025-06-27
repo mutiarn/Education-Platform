@@ -1,10 +1,5 @@
-@extends('layouts.teacher')
-
-@section('title', 'My Quizzes')
-@section('header', 'My Quizzes')
-
-@section('content')
-<div class="w-full max-w-7xl mx-auto bg-white dark:bg-gray-800 px-10 py-10 rounded-lg shadow">
+<x-layouts.app title="Quiz">
+    <div class="w-full max-w-7xl mx-auto bg-white dark:bg-gray-800 px-10 py-10 rounded-lg shadow">
     <h1 class="text-3xl font-semibold mb-8 text-gray-800 dark:text-white">My Quizzes</h1>
 
     <p class="text-gray-600 dark:text-gray-300 mb-6">
@@ -45,7 +40,4 @@
         @endif
     @endforeach
 </div>
-@endsection
-
-
-
+</x-layouts.app>

@@ -1,10 +1,5 @@
-@extends('layouts.teacher')
-
-@section('title', 'Add New Course')
-@section('header', 'Add New Course')
-
-@section('content')
-<div class="w-full max-w-5xl mx-auto bg-white dark:bg-gray-800 px-10 py-10 rounded-lg shadow">
+<x-layouts.app title="Add Course">
+    <div class="w-full max-w-5xl mx-auto bg-white dark:bg-gray-800 px-10 py-10 rounded-lg shadow">
     <h1 class="text-3xl font-semibold mb-8 text-gray-800 dark:text-white">Create New Course</h1>
 
     <form action="{{ route('teacher.courses.store') }}" method="POST" enctype="multipart/form-data">
@@ -132,4 +127,4 @@
         </div>
     </form>
 </div>
-@endsection
+</x-layouts.app>

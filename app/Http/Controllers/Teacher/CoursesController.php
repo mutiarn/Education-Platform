@@ -140,35 +140,35 @@ class CoursesController extends Controller
         return redirect()->route('teacher.courses.show', $id)->with('success', 'Course updated successfully.');
     }
 
-private function convertYoutubeToEmbed($url)
-{
-    if (!$url) return null;
+    private function convertYoutubeToEmbed($url)
+    {
+        if (!$url) return null;
 
-    // Format: https://www.youtube.com/watch?v=G5kzUpWAusI
-    if (preg_match('/youtube\.com\/watch\?v=([^\&]+)/', $url, $matches)) {
-        return 'https://www.youtube.com/embed/' . $matches[1];
+        // Format: https://www.youtube.com/watch?v=G5kzUpWAusI
+        if (preg_match('/youtube\.com\/watch\?v=([^\&]+)/', $url, $matches)) {
+            return 'https://www.youtube.com/embed/' . $matches[1];
+        }
+
+        // Format: https://youtu.be/G5kzUpWAusI
+        if (preg_match('/youtu\.be\/([^\?]+)/', $url, $matches)) {
+            return 'https://www.youtube.com/embed/' . $matches[1];
+        }
+
+        // Sudah embed
+        if (str_contains($url, 'youtube.com/embed')) {
+            return $url;
+        }
+
+        return null; // fallback kalau bukan format valid
     }
 
-    // Format: https://youtu.be/G5kzUpWAusI
-    if (preg_match('/youtu\.be\/([^\?]+)/', $url, $matches)) {
-        return 'https://www.youtube.com/embed/' . $matches[1];
+    public function destroy($id)
+    {
+        $course = Course::findOrFail($id);
+        $course->delete();
+
+        return redirect()->route('teacher.courses')->with('success', 'Course deleted successfully.');
     }
-
-    // Sudah embed
-    if (str_contains($url, 'youtube.com/embed')) {
-        return $url;
-    }
-
-    return null; // fallback kalau bukan format valid
-}
-
-public function destroy($id)
-{
-    $course = Course::findOrFail($id);
-    $course->delete();
-
-    return redirect()->route('teacher.courses')->with('success', 'Course deleted successfully.');
-}
 
 
 

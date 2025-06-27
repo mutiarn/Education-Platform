@@ -1,10 +1,12 @@
-@extends('layouts.teacher')
-
-@section('title', 'Quiz Detail')
-@section('header', 'Quiz Detail')
-
-@section('content')
-<div class="w-full max-w-7xl mx-auto bg-white dark:bg-gray-800 px-10 py-10 rounded-lg shadow">
+<x-layouts.app title="Quiz">
+    <x-slot name="header">
+        <nav class="text-lg text-gray-800 dark:text-gray-100 font-semibold">
+            <a href="{{ route('teacher.quiz') }}" class="hover:underline text-blue-600 dark:text-blue-400">My Courses</a>
+            <span class="mx-2">/</span>
+            <span>{{ $quiz->title }}</span>
+        </nav>
+    </x-slot>
+    <div class="w-full max-w-7xl mx-auto bg-white dark:bg-gray-800 px-10 py-10 rounded-lg shadow">
     <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">{{ $quiz->title }}</h1>
     @if($quiz->description)
         <p class="text-gray-600 dark:text-gray-300 mb-4">{{ $quiz->description }}</p>
@@ -50,4 +52,4 @@
         </a>
     </div>
 </div>
-@endsection
+</x-layouts.app>

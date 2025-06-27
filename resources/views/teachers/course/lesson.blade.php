@@ -1,18 +1,12 @@
-@extends('layouts.teacher')
-
-@section('title', 'My Courses')
-@section('header')
-    <div class="text-white text-lg">
-        <a href="{{ route('teacher.courses') }}" class="hover:underline">My Courses</a>
-        <span class="mx-2 text-gray-400">/</span>
-        <span class="font-semibold">{{ $course->title }}</span>
-    </div>
-@endsection
-
-
-
-@section('content')
-<div class="bg-white dark:bg-gray-800 dark:border-gray-700 border-b border-gray-200">
+<x-layouts.app title="My Course">
+    <x-slot name="header">
+        <nav class="text-lg text-gray-800 dark:text-gray-100 font-semibold">
+            <a href="{{ route('teacher.courses') }}" class="hover:underline text-blue-600 dark:text-blue-400">My Courses</a>
+            <span class="mx-2">/</span>
+            <span>{{ $course->title }}</span>
+        </nav>
+    </x-slot>
+    <div class="bg-white dark:bg-gray-800 dark:border-gray-700 border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center space-x-4">
@@ -35,22 +29,6 @@
 
 <div class="max-w-7xl mx-auto flex">
     <!-- Main Content - Video Player -->
-    @php
-        use Illuminate\Support\Str;
-
-        function getEmbedUrl($url)
-        {
-            if (Str::startsWith($url, 'https://youtu.be/')) {
-                return str_replace('https://youtu.be/', 'https://www.youtube.com/embed/', $url);
-            }
-            if (Str::contains($url, 'watch?v=')) {
-                return preg_replace('/watch\\?v=/', 'embed/', $url);
-            }
-            return $url;
-        }
-
-        $embedUrl = getEmbedUrl($lesson->video_url);
-    @endphp
 
     <div class="flex-1 bg-white dark:bg-gray-900">
         <div class="aspect-video bg-gray-900 flex items-center justify-center">
@@ -91,7 +69,7 @@
             <!-- Navigation Buttons -->
             <div class="flex items-center justify-between mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                 @if($previousLesson)
-                    <a href="{{ route('courses.lessons.show', [$course->id, $previousLesson->id]) }}" 
+                    <a href="{{ route('teacher.courses.lessons.show', [$course->id, $previousLesson->id]) }}" 
                        class="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
                         <x-heroicon-o-chevron-left class="h-4 w-4 mr-2" />
                         Previous Lesson
@@ -101,7 +79,7 @@
                 @endif
 
                 @if($nextLesson)
-                    <a href="{{ route('courses.lessons.show', [$course->id, $nextLesson->id]) }}" 
+                    <a href="{{ route('teacher.courses.lessons.show', [$course->id, $nextLesson->id]) }}" 
                        class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-blue-700">
                         Next Lesson
                         <x-heroicon-o-chevron-right class="h-4 w-4 ml-2" />
@@ -139,7 +117,7 @@
                 <div class="space-y-2">
                     @foreach($course->lessons as $courseLesson)
                         <div class="group">
-                            <a href="{{ route('courses.lessons.show', [$course->id, $courseLesson->id]) }}" 
+                            <a href="{{ route('teacher.courses.lessons.show', [$course->id, $courseLesson->id]) }}" 
                                class="block p-3 rounded-lg transition-colors 
                                {{ $courseLesson->id === $lesson->id 
                                     ? 'bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-700' 
@@ -200,4 +178,4 @@
         </div>
     </div>
 </div>
-@endsection
+</x-layouts.app>

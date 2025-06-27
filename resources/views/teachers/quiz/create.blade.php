@@ -1,10 +1,5 @@
-@extends('layouts.teacher')
-
-@section('title', 'Create Quiz')
-@section('header', 'Create Quiz')
-
-@section('content')
-<div class="w-full max-w-5xl mx-auto bg-white dark:bg-gray-800 px-10 py-10 rounded-lg shadow">
+<x-layouts.app title="Add Quiz">
+    <div class="w-full max-w-5xl mx-auto bg-white dark:bg-gray-800 px-10 py-10 rounded-lg shadow">
     <h1 class="text-3xl font-semibold mb-8 text-gray-800 dark:text-white">
         Create Quiz for <span class="text-blue-600">{{ $course->title }}</span>
     </h1>
@@ -76,7 +71,7 @@
 
             <div>
                 <button type="button" @click="questions.push({})"
-                        class="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                        class="inline-flex items-center bg-primary text-white px-4 py-2 rounded hover:bg-primary/80 transition">
                     + Add Question
                 </button>
             </div>
@@ -97,4 +92,4 @@
         </div>
     </form>
 </div>
-@endsection
+</x-layouts.app>

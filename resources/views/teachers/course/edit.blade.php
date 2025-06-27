@@ -1,9 +1,4 @@
-@extends('layouts.teacher')
-
-@section('title', 'Edit Course')
-@section('header', 'Edit Course')
-
-@section('content')
+<x-layouts.app title="Edit Course">
 <div class="w-full max-w-5xl mx-auto bg-white dark:bg-gray-800 px-10 py-10 rounded-lg shadow">
     <h1 class="text-3xl font-semibold mb-8 text-gray-800 dark:text-white">Edit Course</h1>
 
@@ -169,4 +164,4 @@
         </div>
     </div>
 </div>
-@endsection
+</x-layouts.app>

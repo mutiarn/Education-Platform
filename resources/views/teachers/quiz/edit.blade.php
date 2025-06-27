@@ -1,10 +1,5 @@
-@extends('layouts.teacher')
-
-@section('title', 'Edit Quiz')
-@section('header', 'Edit Quiz')
-
-@section('content')
-<div class="max-w-6xl mx-auto bg-white dark:bg-gray-800 px-10 py-10 rounded-lg shadow space-y-10">
+<x-layouts.app title="Edit Quiz">
+    <div class="max-w-6xl mx-auto bg-white dark:bg-gray-800 px-10 py-10 rounded-lg shadow space-y-10">
     <h1 class="text-3xl font-semibold text-gray-800 dark:text-white">Edit Quiz</h1>
 
     <form method="POST" action="{{ route('teacher.quiz.update', $quiz->id) }}">
@@ -139,4 +134,4 @@
         </div>
     </form>
 </div>
-@endsection
+</x-layouts.app>
